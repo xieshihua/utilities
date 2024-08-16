@@ -4,7 +4,7 @@ Search through a directory supplied (defaults to current directory) and its sub 
 
 find file with the extension supplied (defaults to .html),
 
-replace oldString with newString listed in [Input File].
+replace [old string] with [new string] listed in [Input File].
 
 > [Input File] contains a list of "[operation type]\~[old string]\~[new string]" per line,
 > where '~' is the default delimiter. You may specify your own delimiter by using the -l option.
