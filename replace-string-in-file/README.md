@@ -1,4 +1,4 @@
-Usage: `replaceStrings.sh [Options] [Input File]`
+### Usage: `replaceStrings.sh [Options] [Input File]`
 
 Search through a directory supplied (defaults to current directory) and its sub directories,
 
@@ -19,3 +19,5 @@ Options:
 	-d [Search Directory], optional. Defaults to the current directory. 
 	-e [File Extension], such as \.html, \.py, etc. optional. defaults to '\.html'. 
 	-l [delimiter], optional. Defaults to '~'
+
+Here is a sample of string replacement list file: [replaceStringsSampleList.txt](https://github.com/xieshihua/utilities/blob/main/replace-string-in-file/replaceStringsSampleList.txt)
