@@ -6,15 +6,12 @@ find file with the extension supplied (defaults to .html),
 
 replace oldString with newString listed in [Input File].
 
-[Input File] contains a list of operation-type\~oldString\~newString per line,
-
-where '~' is the default delimiter. You may specify your own delimiter by using the -l option.
-
-operation-type:
-
-* 'm' for multipleline replacing,
-* 's' for single line replacing,
-* '#' skip the line.
+> [Input File] contains a list of "[operation type]\~[old string]\~[new string]" per line,
+> where '~' is the default delimiter. You may specify your own delimiter by using the -l option.
+> [operation type]:
+> * 'm' for multipleline replacing,
+> * 's' for single line replacing,
+> * '#' skip the line.
 		
 		
 Options:
