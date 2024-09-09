@@ -20,4 +20,9 @@ Options:
 	-e [File Extension], such as \.html, \.py, etc. optional. defaults to '\.html'. 
 	-l [delimiter], optional. Defaults to '~'
 
-Here is a sample of string replacement list file: [replaceStringsSampleList.txt](https://github.com/xieshihua/utilities/blob/main/replace-string-in-file/replaceStringsSampleList.txt)
+The sample input file includes examples of:
+* Remove blank line based on context
+* Insert new line of text based on context
+* Use '\\' to escape special characters
+
+[replaceStringsSampleList.txt](https://github.com/xieshihua/utilities/blob/main/replace-string-in-file/replaceStringsSampleList.txt)
