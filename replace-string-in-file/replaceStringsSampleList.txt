@@ -1,7 +1,9 @@
 #~------Begin of Original Sample Text------
 #~INCLUDE PYTHON
 #~def ParamFunc():
+#~
 #~import myModule
+#~
 #~...
 #~END_PYTHON="import&lt;space&gt;myModule&lt;lf&gt;..."
 #~...
@@ -13,6 +15,20 @@
 #~
 #~------Begin of string replacement------
 #~Using '\' to escape special characters.
+#~
+#~Remove extra line feed: insert a special string "{@}" to mark blank lines for sed to process it appropriately.
+#~{
+#~Mark blank lines
+s~^$~{@}
+#~Remove blank Lines
+m~Func():\n{@}~Func():
+m~myModule\n{@}~myModule
+#~Remove blank line markers
+s~{@}~
+#~
+#~}
+#~End of Remove extra line feed
+#~
 #~insert a new line 'import fme' and insert 'from myPackage ' in front of import myModule.
 m~Func():\n  import myModule~Func():\n  import fme\n  from myPackage import myModule
 s~\"import\&lt;space\&gt;myModule\&lt;~\"import\&lt;space\&gt;fme\&lt;lf\&gt;from\&lt;space\&gt;myPackage\&lt;space\&gt;import\&lt;space\&gt;myModule\&lt;
