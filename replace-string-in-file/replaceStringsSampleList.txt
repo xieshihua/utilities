@@ -1,3 +1,10 @@
+#~		Operation Types:
+#~			'm' for multipleline replacing,
+#~			's' for single line replacing,
+#~			'#' skip the line.
+#~		Default Delimiter:
+#~			'~'
+#~
 #~------Begin of Original Sample Text------
 #~INCLUDE PYTHON
 #~def ParamFunc():
