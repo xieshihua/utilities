@@ -1,6 +1,6 @@
 #!/bin/bash
 # Usage: ./replaceStrings.sh [Options] [input.txt]
-# [input.txt]: text file with "[operation type]~[old string]~[new string]" per line
+# [input.txt]: text file with "[operation type]~[old string]~[new string]~[optional begin string]~[optional end string]" per line
 # Replace [old string] with [new string] in all file with extension [.file_extension]
 # in a directory and its sub directories
 
@@ -22,8 +22,11 @@ function _usage()
 		[Input File] contains a list of "[operation type]~[old string]~[new string]" per line,
 		where '~' is the default delimiter. You may specify your own delimiter by using the -l option.
 		[operation type]:
-			'm' for multipleline replacing,
-			's' for single line replacing,
+			'e' single line replacing with exception,
+			'm' multipleline replacing,
+			'n' multipleline replacing with exception,
+			'p' pass in your command,
+			's' single line replacing,
 			'#' skip the line.
 		
 		
@@ -55,15 +58,24 @@ while getopts ":d:e:l:-:" chOpt; do
 done
 
 # Apply changes from the input file to all files with the specified extension in the directory.
-while IFS="$stDelimiter" read -r chMultiLine oldString newString;do
-	if [ $chMultiLine == "m" ]; then
-		stMsg="($chMultiLine) Multi-line operation:\n Replacing \n'$oldString' \n with \n'$newString'."
-		sed -i "N; s/$oldString/$newString/; P; D" `tree -fi $stDir | grep $fileExt`
-	elif [ $chMultiLine == "s" ]; then
-		stMsg="($chMultiLine) Single line operation:\n Replacing '$oldString' with '$newString'."
-		sed -i "s/$oldString/$newString/g" `tree -fi $stDir | grep $fileExt`
+while IFS="$stDelimiter" read -r chOperation stOld stNew stBegin stEnd;do
+	if [ $chOperation == "e" ]; then
+		stMsg="($chOperation) Single line with exception operation:\n Replacing '$stOld' with '$stNew', except between '$stBegin' and '$stEnd'."
+		sed -i "/$stBegin/,/$stEnd/!s/$stOld/$stNew/g" `tree -fi $stDir | grep $fileExt`
+	elif [ $chOperation == "m" ]; then
+		stMsg="($chOperation) Multi-line operation:\n Replacing \n'$stOld' \n with \n'$stNew'."
+		sed -i "{N; s/$stOld/$stNew/g; P; D}" `tree -fi $stDir | grep $fileExt`
+	elif [ $chOperation == "p" ]; then
+		stMsg="($chOperation) Pass in command:\n '$stOld'."
+		sed -i "$stOld" `tree -fi $stDir | grep $fileExt`
+	elif [ $chOperation == "n" ]; then
+		stMsg="($chOperation) Multi-line with exception operation:\n Replacing \n'$stOld' \n with \n'$stNew', except between '$stBegin' and '$stEnd'."
+		sed -i "{N; /$stBegin/,/$stEnd/!s/$stOld/$stNew/g; P; D}" `tree -fi $stDir | grep $fileExt`
+	elif [ $chOperation == "s" ]; then
+		stMsg="($chOperation) Single line operation:\n Replacing '$stOld' with '$stNew'."
+		sed -i "s/$stOld/$stNew/g" `tree -fi $stDir | grep $fileExt`
 	else
-		stMsg="($chMultiLine) Skip the line: $chMultiLine~$oldString~$newString."
+		stMsg="($chOperation) Comment: $chOperation~$stOld~$stNew~$stBegin~$stEnd."
 	fi
 	echo -e "$stMsg"
 	
