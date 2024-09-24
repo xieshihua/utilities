@@ -24,10 +24,11 @@ function _usage()
 		replace [old string] with [new string] listed in [Input File].
 		
 		[Input File] contains a list of:
-		"[operation type]~[old string]~[new string]<~[optional begin string]~[optional end string]>"
+		"[operation type]~[old string]~[new string]~<[except begin string]>~<[except end string]>"
 		per line,
 		where '~' is the default delimiter (you may specify your own delimiter through the -l option),
-		[optional begin string] and [optional end string] are used with the 'e' or 'n' operation type.
+		[except begin string] and [except end string] are optional and used with the 'e' or 'n' operation type.
+		You may omit [except end string] if only exclude lines that contains [except begin string] in the text file.
 		
 		[operation type]:
 			'e' single line replacing with exception,
@@ -52,10 +53,10 @@ function _usage()
 		m~Func():\n  import myModule~Func():\\n  import fme\n  from myPackage import myModule
 		#~
 		#~Insert a new line 'import fme', if it is missing.
-		#~FME file format 1, string based new line, single line operation:
-		e~\(\"import\)~\1\&lt;space\&gt;fme\&lt;lf\&gt;import~import~fme&lt;
-		#~FME file format 2, new line based, multiple line operation:
-		n~\(Func():\\n\)\([ ]*\)import~\1\2import fme\\n\2import~Func():\\n~import fme
+		#~FME file format 1, single line operation. Skip the line if 'import\&lt;space\&gt;fme&lt;' exists:
+		e~\(\"import\)~\1\&lt;space\&gt;fme\&lt;lf\&gt;import~import\&lt;space\&gt;fme&lt;
+		#~FME file format 2, multiple line operation. Skip the 2-line block if 'Func():\\n[ ]*import fme' exists:
+		n~\(Func():\\n\)\([ ]*\)import~\1\2import fme\\n\2import~Func():\\n[ ]*import fme
 		#~where \1 is 'Func():\\n', and \2 is [ ]* or any spaces before 'import'.
 		
 EOF
@@ -90,8 +91,13 @@ fi
 # Apply changes from the input file to all files with the specified extension in the directory.
 while IFS="$stDelimiter" read -r chOperation stOld stNew stBegin stEnd;do
 	if [ $chOperation == "e" ]; then
-		stMsg="($chOperation) Single line with exception operation:\n Replacing '$stOld' with '$stNew', except having '$stBegin...$stEnd'."
-		stCommand="/$stBegin/,/$stEnd/!s/$stOld/$stNew/g"
+		if [ -z $stEnd ]; then
+			stMsg="($chOperation) Single line with exception operation:\n Replacing '$stOld' with '$stNew', except having '$stBegin'."
+			stCommand="/$stBegin/!s/$stOld/$stNew/g"
+		else
+			stMsg="($chOperation) Single line with exception operation:\n Replacing '$stOld' with '$stNew', except between '$stBegin' and '$stEnd'."
+			stCommand="/$stBegin/,/$stEnd/!s/$stOld/$stNew/g"
+		fi
 	elif [ $chOperation == "m" ]; then
 		stMsg="($chOperation) Multi-line operation:\n Replacing \n'$stOld' \n with \n'$stNew'."
 		stCommand="{N; s/$stOld/$stNew/g; P; D}"
@@ -99,8 +105,13 @@ while IFS="$stDelimiter" read -r chOperation stOld stNew stBegin stEnd;do
 		stMsg="($chOperation) Pass in command:\n '$stOld'."
 		stCommand="$stOld"
 	elif [ $chOperation == "n" ]; then
-		stMsg="($chOperation) Multi-line with exception operation:\n Replacing \n'$stOld' \n with \n'$stNew', except having '$stBegin...$stEnd'."
-		stCommand="{N; /$stBegin/,/$stEnd/!s/$stOld/$stNew/g; P; D}"
+		if [ -z $stEnd ]; then
+			stMsg="($chOperation) Multi-line with exception operation:\n Replacing '$stOld' with '$stNew', except having '$stBegin'."
+			stCommand="{N; /$stBegin/!s/$stOld/$stNew/g; P; D}"
+		else
+			stMsg="($chOperation) Multi-line with exception operation:\n Replacing '$stOld' with '$stNew', except between '$stBegin' and '$stEnd'."
+			stCommand="{N; /$stBegin/,/$stEnd/!s/$stOld/$stNew/g; P; D}"
+		fi
 	elif [ $chOperation == "s" ]; then
 		stMsg="($chOperation) Single line operation:\n Replacing '$stOld' with '$stNew'."
 		stCommand="s/$stOld/$stNew/g"
