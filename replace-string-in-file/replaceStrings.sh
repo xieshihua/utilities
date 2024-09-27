@@ -32,8 +32,8 @@ function _usage()
 		
 		[operation type]:
 			'e' single line replacing with exception,
-			'm' multipleline replacing,
-			'n' multipleline replacing with exception,
+			'm' multiple line replacing,
+			'n' multiple line replacing with exception,
 			'p' pass in your command,
 			's' single line replacing,
 			'#' Comment line.
