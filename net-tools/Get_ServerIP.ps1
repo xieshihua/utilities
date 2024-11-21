@@ -8,9 +8,10 @@
 # Content of serverList.json:
 <#
 {   
-    "servers": ["server_1",
-        "server_2",
-        "server_3"
+    "servers": [
+        {"name": "server_1"},
+        {"name": "server_2"},
+        {"name": "server_3"}
     ]
 }
 #>
@@ -36,7 +37,7 @@ $QueryConfig=Get-Content -Path $ConfigFile | ConvertFrom-json
 $servers=$QueryConfig.servers
 
 for ($i=0; $i -lt $servers.Count; $i++) {
-        Resolve-DnsName $servers[$i] | Format-Table Name, IPAddress -HideTableHeaders 
+        Resolve-DnsName $servers[$i].name | Format-Table Name, IPAddress -HideTableHeaders 
 }
 
 Stop-Transcript
