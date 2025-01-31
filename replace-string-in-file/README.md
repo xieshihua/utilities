@@ -1,9 +1,9 @@
 ### Usage: `replaceStrings.sh [Options] [Input File]`
 
-Search through a directory supplied (defaults to current directory) and its sub directories,
+A wrapper bash script based on `sed`. It can evaluate patterns across <b>two lines</b>.
 
-find file with the extension supplied (defaults to .html),
-
+Search through a directory supplied (defaults to current directory) and its sub directories,<br>
+find file with the extension supplied (defaults to .html),<br>
 replace [old string] with [new string] listed in [Input File].
 
 	$ ./replaceStrings.sh
@@ -21,8 +21,8 @@ replace [old string] with [new string] listed in [Input File].
 
                 [operation type]:
                         'e' single line replacing with exception,
-                        'm' multiple line replacing,
-                        'n' multiple line replacing with exception,
+                        'm' two-line replacing,
+                        'n' two-line replacing with exception,
                         'p' pass in your own command,
                         's' single line replacing,
                         '#' Comment line.
@@ -38,13 +38,13 @@ replace [old string] with [new string] listed in [Input File].
                 #~
                 #~FME file format 1, string based new line, single line operation:
                 s~\"import\&lt;space\&gt;myModule\&lt;~\"import\&lt;space\&gt;fme\&lt;lf\&gt;from\&lt;space\&gt;myPackage\&lt;space\&gt;import\&lt;space\&gt;myModule\&lt;
-                #~FME file format 2, new line based, multiple line operation:
+                #~FME file format 2, new line based, two-line operation:
                 m~Func():\n  import myModule~Func():\n  import fme\n  from myPackage import myModule
                 #~
                 #~Insert a new line 'import fme', if it is missing.
                 #~FME file format 1, single line operation. Skip the line if 'import\&lt;space\&gt;fme&lt;' exists:
                 e~\(\"import\)~\1\&lt;space\&gt;fme\&lt;lf\&gt;import~import\&lt;space\&gt;fme&lt;
-                #~FME file format 2, multiple line operation. Skip the 2-line block if 'Func():\n[ ]*import fme' exists:
+                #~FME file format 2, two-line operation. Skip the 2-line block if 'Func():\n[ ]*import fme' exists:
                 n~\(Func():\n\)\([ ]*\)import~\1\2import fme\n\2import~Func():\n[ ]*import fme
                 #~where \1 is 'Func():\n', and \2 is [ ]* or any spaces before 'import'.
 
