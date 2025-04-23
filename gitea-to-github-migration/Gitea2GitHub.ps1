@@ -76,7 +76,7 @@ foreach ($line in $file) {
         $jsonData=Get-Content -Path $jsonFilePath | ConvertFrom-json
         $desc=$jsonData.description
         
-		# Get Gitea repo
+	# Get Gitea repo
         $repo= "$GiteaWebsite/$giteaOrg/$giteaRepo.git"
         $ts=Get-Timestamp
 		if ($Mirror) {
