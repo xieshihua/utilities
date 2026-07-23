@@ -3,12 +3,13 @@ setlocal enabledelayedexpansion
 
 set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="testArguments.cmd"
-set Purpose="A template to process arguments."
+set Purpose="A template to process Windows CMD batch commends arguments."
 set Usage="testArguments.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
 set Example="testArguments.cmd arg1 arg2 arg3 arg4 arg5 /t"
 set Remark="Set the EffArg_Required to the number of mandatory arguments."
+set Reference="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
 
 echo %BlockDivider:"=%
 echo %Purpose:"=%
@@ -119,5 +120,6 @@ Exit /B 0
 	echo %Usage2:"=%
 	echo Example: %Example:"=%
 	echo Remark: %Remark:"=%
+	echo Reference: %Reference:"=%
 	echo %BlockDivider:"=%
 Exit /B 0
