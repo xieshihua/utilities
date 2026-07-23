@@ -1,9 +1,18 @@
 echo off
 setlocal enabledelayedexpansion
 
+set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="testArguments.cmd"
 set Purpose="A template to process arguments."
 set Usage="testArguments.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
+set Usage1="       Optional: /? - Help"
+set Usage2="       Optional: /t or /T - Test run or dry run."
+set Example="testArguments.cmd arg1 arg2 arg3 arg4 arg5 /t"
+set Remark="Set the EffArg_Required to the number of mandatory arguments."
+
+echo %BlockDivider:"=%
+echo %Purpose:"=%
+echo %BlockDivider:"=%
 
 REM 'shift' will process all the argument.
 set /A Arg_Count=0
@@ -16,7 +25,7 @@ rem set unexpected_args=""
 
 REM Check if at least one argument is passed
 if "%~1"=="" (
-    echo No parameters provided.
+    echo No argument is provided.
 	set Is_Help=TRUE
 ) else (
 	echo.
@@ -66,6 +75,10 @@ shift
 goto arg_loop
 :end_arg_loop
 
+if not !Effective_Args! equ %EffArg_Required% (
+	set Is_Help=TRUE
+)
+
 if "!unexpected_args!" GTR "" (
 	echo.
 	echo The following arguments are ignored: !unexpected_args!
@@ -82,12 +95,13 @@ if !Is_Test!==TRUE (
 )
 
 if !Is_Help!==TRUE (
-	echo.
-	echo Name: !Name:"=! 
-	echo Purpose: !Purpose:"=!
-	echo Usage: !Usage:"=!
-	set Usage="       Optional: /? - Help"
-	echo !Usage:"=!
-	set Usage="       Optional: /t or /T - Test run or dry run."
-	echo !Usage:"=!
+	echo %BlockDivider:"=%
+	echo Name: %Name:"=% 
+	echo Purpose: %Purpose:"=%
+	echo Usage: %Usage:"=%
+	echo %Usage1:"=%
+	echo %Usage2:"=%
+	echo Example: %Example:"=%
+	echo Remark: %Remark:"=%
+	echo %BlockDivider:"=%
 )
