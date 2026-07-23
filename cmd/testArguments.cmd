@@ -5,6 +5,7 @@ set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 set Name="testArguments.cmd"
 set Purpose="A template to process Windows CMD batch commends arguments."
 set Usage="testArguments.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
+rem Below are optional Help items. Comment out any item that you do not use.
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
 set Example="testArguments.cmd arg1 arg2 arg3 arg4 arg5 /t"
@@ -116,10 +117,20 @@ Exit /B 0
 	echo Name: %Name:"=% 
 	echo Purpose: %Purpose:"=%
 	echo Usage: %Usage:"=%
-	echo %Usage1:"=%
-	echo %Usage2:"=%
-	echo Example: %Example:"=%
-	echo Remark: %Remark:"=%
-	echo Reference: %Reference:"=%
+	if defined Usage1 (
+		echo %Usage1:"=%
+	)
+	if defined Usage2 (
+		echo %Usage2:"=%
+	)
+	if defined Example (
+		echo Example: %Example:"=%
+	)
+	if defined Remark (
+		echo Remark: %Remark:"=%
+	)
+	if defined Reference (
+		echo Reference: %Reference:"=%
+	)
 	echo %BlockDivider:"=%
 Exit /B 0
