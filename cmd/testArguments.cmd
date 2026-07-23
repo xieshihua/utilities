@@ -77,19 +77,16 @@ goto arg_loop
 
 if !Effective_Args! lss %EffArg_Required% (
 	set Is_Help=TRUE
-	echo.
-	echo Error:
-	echo Minimum Effective Arguments expected: %EffArg_Required%
-	echo Actual Effective Arguments received: !Effective_Args!
+	call :MSG_EffectiveArgs Error
 )
 
 if !Effective_Args! gtr %EffArg_Required% (
-	echo.
+	call :MSG_EffectiveArgs Warning
 	echo The following arguments are ignored: !unexpected_args!
 )
 
 if !Is_Help!==TRUE (
-	call :Help
+	call :MSG_Help
 	exit /b 0
 )
 
@@ -105,7 +102,14 @@ if !Is_Test!==TRUE (
 
 Exit /B 0
 
-:Help
+:MSG_EffectiveArgs
+	echo.
+	echo %~1:
+	echo Effective Arguments expected: %EffArg_Required%
+	echo Actual Effective Arguments received: !Effective_Args!
+Exit /B 0
+
+:MSG_Help
 	echo.
 	echo %BlockDivider:"=%
 	echo Name: %Name:"=% 
