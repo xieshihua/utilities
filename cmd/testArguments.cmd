@@ -24,13 +24,13 @@ rem set delimiter=""
 rem set unexpected_args=""
 
 REM Check if at least one argument is passed
-if "%~1"=="" (
-    echo No argument is provided.
-	set Is_Help=TRUE
-) else (
-	echo.
-	echo arguments: %*
-)
+REM if "%~1"=="" (
+    REM echo No argument is provided.
+	REM set Is_Help=TRUE
+REM ) else (
+	REM echo.
+	REM echo arguments: %*
+REM )
 
 :arg_loop
 if "%~1"=="" goto end_arg_loop
