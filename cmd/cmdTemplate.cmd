@@ -4,8 +4,8 @@ setlocal enabledelayedexpansion
 set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="cmdTemplate.cmd"
 set Purpose="A template to process Windows CMD batch commends arguments."
-rem Below are optional Help items. Comment out any item that you do not use.
 set Usage0="cmdTemplate.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
+rem Below are optional Help items. Delete or comment out any item that you do not use.
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
 set Example0="cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
