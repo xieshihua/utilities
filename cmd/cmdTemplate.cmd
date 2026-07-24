@@ -11,7 +11,7 @@ set Usage2="       Optional: /t or /T - Test run or dry run."
 set Example0="cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
 set Remark0="Set the EffArg_Required to the number of mandatory arguments."
 set Reference0="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
-set Reference1="https://ss64.com/nt/ also has other lists: Linux, macOS, PowerShell, ASCII, VBScript, Tools, Passwords."
+set Reference1="https://ss64.com/ also has other lists: Linux, macOS, PowerShell, ASCII, VBScript, Tools, Passwords."
 
 echo %BlockDivider:"=%
 echo %Purpose:"=%
