@@ -4,13 +4,14 @@ setlocal enabledelayedexpansion
 set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="cmdTemplate.cmd"
 set Purpose="A template to process Windows CMD batch commends arguments."
-set Usage="cmdTemplate.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
 rem Below are optional Help items. Comment out any item that you do not use.
+set Usage0="cmdTemplate.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
-set Example="cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
-set Remark="Set the EffArg_Required to the number of mandatory arguments."
-set Reference="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
+set Example0="cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
+set Remark0="Set the EffArg_Required to the number of mandatory arguments."
+set Reference0="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
+set Reference1="https://ss64.com/nt/ also has other lists: Linux, macOS, PowerShell, ASCII, VBScript, Tools, Passwords."
 
 echo %BlockDivider:"=%
 echo %Purpose:"=%
@@ -54,15 +55,15 @@ if "%~1"=="" goto end_arg_loop
 		rem echo Effective Args: !Effective_Args!
 		if !Effective_Args! == 1 (
 			set Eff_Arg1=%~1
-			echo Arg1: %~1
+			echo Eff_Arg1: !Eff_Arg1!
 		)
 		if !Effective_Args! == 2 (
 			set Eff_Arg2=%~1
-			echo Arg2: %~1
+			echo Eff_Arg2: !Eff_Arg2!
 		)
 		if !Effective_Args! == 3 (
 			set Eff_Arg3=%~1
-			echo Arg3: %~1
+			echo Eff_Arg3: !Eff_Arg3!
 		)
 		if !Effective_Args! GTR %EffArg_Required% (
 			if "!unexpected_args!" GTR "" (
@@ -116,21 +117,34 @@ Exit /B 0
 	echo %BlockDivider:"=%
 	echo Name: %Name:"=% 
 	echo Purpose: %Purpose:"=%
-	echo Usage: %Usage:"=%
-	if defined Usage1 (
-		echo %Usage1:"=%
+	for %%i in (0,1,2,3,4) do (
+		if defined Usage%%i (
+			set msg=!Usage%%i!
+			set msg=!msg:"=!
+			if %%i==0 (
+				echo Usage: !msg!
+			) else (
+				echo !msg!
+			)
+		)
 	)
-	if defined Usage2 (
-		echo %Usage2:"=%
+	for %%i in (0,1,2,3,4) do (
+		if defined Example%%i (
+			set msg=!Example%%i!
+			echo Example%%i: !msg:"=!
+		)
 	)
-	if defined Example (
-		echo Example: %Example:"=%
+	for %%i in (0,1,2,3,4) do (
+		if defined Remark%%i (
+			set msg=!Remark%%i!
+			echo Remark%%i: !msg:"=!
+		)
 	)
-	if defined Remark (
-		echo Remark: %Remark:"=%
-	)
-	if defined Reference (
-		echo Reference: %Reference:"=%
+	for %%i in (0,1,2,3,4) do (
+		if defined Reference%%i (
+			set msg=!Reference%%i!
+			echo Reference%%i: !msg:"=!
+		)
 	)
 	echo %BlockDivider:"=%
 Exit /B 0
