@@ -3,18 +3,29 @@ setlocal enabledelayedexpansion
 
 set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="cmdTemplate.cmd"
-set Purpose="A template to process Windows CMD batch commends arguments."
-set Usage0="cmdTemplate.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
+set Purpose0="A template to process Windows CMD batch commends arguments."
 rem Below are optional Help items. Delete or comment out any item that you do not use.
+set Purpose1="         * Please replace head sections with your own notes.
+rem use "." to insert a blank line.
+set Purpose2="."
+set Usage0="cmdTemplate.cmd [/?] [/t or /T] arg1 arg2 arg3 ..."
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
-set Example0="cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
-set Remark0="Set the EffArg_Required to the number of mandatory arguments."
-set Reference0="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
-set Reference1="https://ss64.com/ also has other lists: Linux, macOS, PowerShell, ASCII, VBScript, Tools, Passwords."
+set Usage3="."
+set Example0="The following command demos a test run with five auguments."
+set Example1="."
+set Example2="  C:\dvlp>cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
+set Example3="."
+set Remark0="- Set the EffArg_Required to the number of mandatory arguments."
+set Remark1="        - Set Max_Help_Items to the maximun items in the head sections."
+set Remark2="."
+set Reference0="- A thorough reference to Windows CMD commands can be found at: https://ss64.com/nt/"
+set Reference1="           - https://ss64.com/ also provides references of Linux, macOS, PowerShell, ASCII, VBScript, Tools, and Passwords."
+set Head_Sections=Purpose,Usage,Example,Remark,Reference
+set Max_Help_Items=0,1,2,3
 
 echo %BlockDivider:"=%
-echo %Purpose:"=%
+echo %Name:"=%: %Purpose0:"=%
 echo %BlockDivider:"=%
 
 REM 'shift' will process all the argument.
@@ -78,14 +89,16 @@ shift
 goto arg_loop
 :end_arg_loop
 
-if !Effective_Args! lss %EffArg_Required% (
-	set Is_Help=TRUE
-	call :MSG_EffectiveArgs Error
-)
+if not !Is_Help!==TRUE (
+	if !Effective_Args! lss %EffArg_Required% (
+		set Is_Help=TRUE
+		call :MSG_EffectiveArgs Error
+	)
 
-if !Effective_Args! gtr %EffArg_Required% (
-	call :MSG_EffectiveArgs Warning
-	echo The following arguments are ignored: !unexpected_args!
+	if !Effective_Args! gtr %EffArg_Required% (
+		call :MSG_EffectiveArgs Warning
+		echo The following arguments are ignored: !unexpected_args!
+	)
 )
 
 if !Is_Help!==TRUE (
@@ -116,34 +129,21 @@ Exit /B 0
 	echo.
 	echo %BlockDivider:"=%
 	echo Name: %Name:"=% 
-	echo Purpose: %Purpose:"=%
-	for %%i in (0,1,2,3,4) do (
-		if defined Usage%%i (
-			set msg=!Usage%%i!
-			set msg=!msg:"=!
-			if %%i==0 (
-				echo Usage: !msg!
-			) else (
-				echo !msg!
+	for %%a in (%Head_Sections%) do (
+		for %%i in (%Max_Help_Items%) do (
+			if defined %%~a%%i (
+				set msg=!%%~a%%i!
+				if !msg! equ "." (
+					echo.
+				) else (
+					set msg=!msg:"=!
+					if %%i==0 (
+						echo %%~a: !msg!
+					) else (
+						echo !msg!
+					)
+				)
 			)
-		)
-	)
-	for %%i in (0,1,2,3,4) do (
-		if defined Example%%i (
-			set msg=!Example%%i!
-			echo Example%%i: !msg:"=!
-		)
-	)
-	for %%i in (0,1,2,3,4) do (
-		if defined Remark%%i (
-			set msg=!Remark%%i!
-			echo Remark%%i: !msg:"=!
-		)
-	)
-	for %%i in (0,1,2,3,4) do (
-		if defined Reference%%i (
-			set msg=!Reference%%i!
-			echo Reference%%i: !msg:"=!
 		)
 	)
 	echo %BlockDivider:"=%
