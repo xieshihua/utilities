@@ -37,6 +37,7 @@ set Is_Help=FALSE
 rem set delimiter=""
 rem set unexpected_args=""
 
+rem This block is for your reference only.
 REM Check if at least one argument is passed
 REM if "%~1"=="" (
     REM echo No argument is provided.
