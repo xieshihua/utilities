@@ -3,16 +3,24 @@ setlocal enabledelayedexpansion
 
 set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="startService.cmd"
-set Purpose="Start a Windows service if it is not running."
-set Usage="startService.cmd [/?] [/t or T] service_name"
+set Purpose0="Start a Windows service if it is not running."
+set Purpose1="."
+set Usage0="startService.cmd [/?] [/t or T] service_name"
 set Usage1="       Optional: /? - Help"
 set Usage2="       Optional: /t or /T - Test run or dry run."
-set Example="startService.cmd AppReadiness /t"
+set Usage3="."
+set Example0="The following command shows the status of AppReadiness.
+set Example1=If the service is not running, it shows the command to start the service:"
+set Example2="."
+set Example3="  C:\dvlp>startService.cmd AppReadiness /t"
+set Example4="."
 rem set Remark="Set the EffArg_Required to the number of mandatory arguments."
 rem set Reference="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
+set Head_Sections=Purpose,Usage,Example
+set Max_Help_Items=0,1,2,3
 
 echo %BlockDivider:"=%
-echo %Purpose:"=%
+echo %Name:"=%: %Purpose0:"=%
 echo %BlockDivider:"=%
 
 REM 'shift' will process all the arguments.
@@ -96,17 +104,6 @@ if !Is_Test!==TRUE (
 	echo.
 )
 
-if !Is_Help!==TRUE (
-	echo.
-	echo Name: !Name:"=! 
-	echo Purpose: !Purpose:"=!
-	echo Usage: !Usage:"=!
-	set Usage="       Optional: /? - Help"
-	echo !Usage:"=!
-	set Usage="       Optional: /t or /T - Test run or dry run."
-	echo !Usage:"=!
-)
-
 Exit /B 0
 
 :MSG_EffectiveArgs
@@ -120,22 +117,22 @@ Exit /B 0
 	echo.
 	echo %BlockDivider:"=%
 	echo Name: %Name:"=% 
-	echo Purpose: %Purpose:"=%
-	echo Usage: %Usage:"=%
-	if defined Usage1 (
-		echo %Usage1:"=%
-	)
-	if defined Usage2 (
-		echo %Usage2:"=%
-	)
-	if defined Example (
-		echo Example: %Example:"=%
-	)
-	if defined Remark (
-		echo Remark: %Remark:"=%
-	)
-	if defined Reference (
-		echo Reference: %Reference:"=%
+	for %%a in (%Head_Sections%) do (
+		for %%i in (%Max_Help_Items%) do (
+			if defined %%~a%%i (
+				set msg=!%%~a%%i!
+				if !msg! equ "." (
+					echo.
+				) else (
+					set msg=!msg:"=!
+					if %%i==0 (
+						echo %%~a: !msg!
+					) else (
+						echo !msg!
+					)
+				)
+			)
+		)
 	)
 	echo %BlockDivider:"=%
 Exit /B 0
