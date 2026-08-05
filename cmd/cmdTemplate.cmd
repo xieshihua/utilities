@@ -6,7 +6,7 @@ set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 set Name="cmdTemplate.cmd"
 set Purpose0="A template to process Windows CMD batch commends arguments."
 rem Below are optional Help items. Delete or comment out any item that you do not use.
-set Purpose1="         * Please replace head sections with your own notes.
+set Purpose1="         * Please replace head sections with your own notes."
 rem use "." to insert a blank line.
 set Purpose2="."
 set Usage0="cmdTemplate.cmd [/?] [/t or /T] [/p or /P:Path] arg1 arg2 arg3 ..."
