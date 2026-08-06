@@ -2,36 +2,37 @@ echo off
 setlocal enabledelayedexpansion
 
 set BlockDivider0="*********************************************************************"
-set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-set Name="cmdTemplate.cmd"
+REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+set Name="cmd_template.cmd"
 set Purpose0="A template to process Windows CMD batch commends arguments."
 rem Below are optional Help items. Delete or comment out any item that you do not use.
-set Purpose1="         * Please replace head sections with your own notes."
 rem use "." to insert a blank line.
-set Purpose2="."
-set Usage0="cmdTemplate.cmd [/?] [/t or /T] [/p or /P:Path] arg1 arg2 arg3 ..."
-set Usage1="       Optional: /? - Help, defaults to FALSE"
-set Usage2="       Optional: /t or /T - Test run or dry run, defaults to FALSE"
-set Usage3="       Optional: /p or /P - Path to a directory. e.g. /P:C:\dvlp\temp. Defaults to [Path_to_Check] if [/P:Path] is not set."
-set Usage4="       [arg1]: The first argument."
-set Usage5="       [arg2]: The second argument."
-set Usage6="       [arg3]: The third argument." 
-set Usage7="."
-set Example0=" "
-set Example1="- The following command demos a [Test] run with 5 auguments, and to show the command of listing the content of the default folder set by [Path_to_Check]."
-set Example2="."
-set Example3="    C:\dvlp>cmdTemplate.cmd arg1 arg2 arg3 arg4 arg5 /t"
-set Example4="."
-set Example5="- The following command demos an [Active] run with 3 auguments, and to list the content of [C:\Program Files] specified by the [/P] optional argument."
-set Example6="."
-set Example7="    C:\dvlp>cmdTemplate.cmd arg1 arg2 arg3 '/P:C:\Program Files'"
-set Example8="."
-set Remark0="- Set the EffArg_Required to the number of mandatory arguments."
-set Remark1="        - Set Max_Help_Items to the maximun items in the head sections."
-set Remark2="."
-set Reference0="- A thorough reference to Windows CMD commands can be found at: https://ss64.com/nt/"
-set Reference1="           - https://ss64.com/ also provides references of Linux, macOS, PowerShell, ASCII, VBScript, Tools, and Passwords."
-set Head_Sections=Purpose,Usage,Example,Remark,Reference
+set Usage0="cmd_template.cmd [/?] [/t | /T] [[/p | /P]:Path] arg1 arg2 arg3 ..."
+set Usage1="."
+set Usage2="  [/?]             Optional. Display the Help info, defaults to FALSE"
+set Usage3="  [/t | /T]        Optional. Test run or dry run, defaults to FALSE"
+set Usage4="  [[/p | /P]:Path] Optional. Path to a directory. e.g. /P:C:\dvlp\temp. Defaults to [Path_to_Check]."
+set Usage5="  arg1             The first argument."
+set Usage6="  arg2             The second argument."
+set Usage7="  arg3             The third argument." 
+set Usage8="."
+set Example0="Example 1: The following command demos a [Test] run with 5 auguments, and to show the command of listing the content of the default folder set by [Path_to_Check]."
+set Example1="."
+set Example2="    C:\dvlp>cmd_template.cmd arg1 arg2 arg3 arg4 arg5 /t"
+set Example3="."
+set Example4="Example 2: The following command demos an [Active] run with 3 auguments, and to list the content of [C:\Program Files] specified by the [/P] optional argument."
+set Example5="."
+set Example6="    C:\dvlp>cmd_template.cmd arg1 arg2 arg3 '/P:C:\Program Files'"
+set Example7="."
+set Remark0="Remarks:"
+set Remark1="1. Set the EffArg_Required to the number of mandatory arguments."
+set Remark2="2. Set Max_Help_Items to the maximun items in the head sections."
+set Remark3="3. Please replace head sections with your own notes."
+set Remark4="."
+set Reference0="References:"
+set Reference1="- A thorough reference to Windows CMD commands can be found at: https://ss64.com/nt/"
+set Reference2="- https://ss64.com/ also provides references of Linux, macOS, PowerShell, ASCII, VBScript, Tools, and Passwords."
+set Head_Sections=Usage,Example,Remark,Reference
 set Max_Help_Items=0,1,2,3,4,5,6,7,8
 
 echo %BlockDivider0:"=%
@@ -139,8 +140,8 @@ Exit /B 0
 
 :MSG_Help
 	echo.
-	echo %BlockDivider1:"=%
-	echo Name: %Name:"=% 
+	REM echo %BlockDivider1:"=%
+	REM echo Name: %Name:"=% 
 	for %%a in (%Head_Sections%) do (
 		for %%i in (%Max_Help_Items%) do (
 			if defined %%~a%%i (
@@ -150,14 +151,15 @@ Exit /B 0
 				) else (
 					set msg=!msg:"=!
 					set msg=!msg:'="!
-					if %%i==0 (
-						echo %%~a: !msg!
-					) else (
-						echo !msg!
-					)
+					echo !msg!
+					REM if %%i==0 (
+						REM echo %%~a: !msg!
+					REM ) else (
+						REM echo !msg!
+					REM )
 				)
 			)
 		)
 	)
-	echo %BlockDivider1:"=%
+	REM echo %BlockDivider1:"=%
 Exit /B 0
