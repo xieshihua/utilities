@@ -1,27 +1,29 @@
 echo off
 setlocal enabledelayedexpansion
 
-set BlockDivider="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-set Name="startService.cmd"
+set BlockDivider0="*********************************************************************"
+REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+set Name="start_service.cmd"
 set Purpose0="Start a Windows service if it is not running."
-set Purpose1="."
-set Usage0="startService.cmd [/?] [/t or T] service_name"
-set Usage1="       Optional: /? - Help"
-set Usage2="       Optional: /t or /T - Test run or dry run."
-set Usage3="."
+set Usage0="start_service.cmd [/?] [/T] service_name"
+set Usage1="."
+set Usage2="  [/?]          Optional. Display the Help info, defaults to FALSE."
+set Usage3="  [/T]          Optional. Test run or dry run, defaults to FALSE."
+set Usage4="  service_name  The name of a Windows service."
+set Usage5="."
 set Example0="The following command shows the status of AppReadiness."
 set Example1="If the service is not running, it shows the command to start the service:"
 set Example2="."
-set Example3="  C:\dvlp>startService.cmd AppReadiness /t"
+set Example3="  C:\dvlp>start_service.cmd AppReadiness /t"
 set Example4="."
 rem set Remark="Set the EffArg_Required to the number of mandatory arguments."
 rem set Reference="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
-set Head_Sections=Purpose,Usage,Example
-set Max_Help_Items=0,1,2,3
+set Head_Sections=Usage,Example
+set Max_Help_Items=0,1,2,3,4,5
 
-echo %BlockDivider:"=%
+echo %BlockDivider0:"=%
 echo %Name:"=%: %Purpose0:"=%
-echo %BlockDivider:"=%
+echo %BlockDivider0:"=%
 
 REM 'shift' will process all the arguments.
 set /A Arg_Count=0
@@ -36,12 +38,16 @@ rem set unexpected_args=""
 if "%~1"=="" goto end_arg_loop
 	set /a Arg_Count+=1
 	set Is_Effective=TRUE
-	if /I "%~1" == "/t" (
-		set Is_Test=TRUE
+	rem echo argument !Arg_Count!: %~1
+	rem /I          Do a case Insensitive string comparison.
+	set tmp_arg=%~1
+	rem echo tmp_arg: !tmp_arg!
+	if "!tmp_arg!" == "/?" (
+		set Is_Help=TRUE
 		set Is_Effective=FALSE
 	)
-	if "%~1" == "/?" (
-		set Is_Help=TRUE
+	if /I "!tmp_arg!" == "/t" (
+		set Is_Test=TRUE
 		set Is_Effective=FALSE
 	)
 	
@@ -63,14 +69,16 @@ shift
 goto arg_loop
 :end_arg_loop
 
-if !Effective_Args! lss %EffArg_Required% (
-	set Is_Help=TRUE
-	call :MSG_EffectiveArgs Error
-)
+if not !Is_Help!==TRUE (
+	if !Effective_Args! lss %EffArg_Required% (
+		set Is_Help=TRUE
+		call :MSG_EffectiveArgs Error
+	)
 
-if !Effective_Args! gtr %EffArg_Required% (
-	call :MSG_EffectiveArgs Warning
-	echo The following arguments are ignored: !unexpected_args!
+	if !Effective_Args! gtr %EffArg_Required% (
+		call :MSG_EffectiveArgs Warning
+		echo The following arguments are ignored: !unexpected_args!
+	)
 )
 
 if !Is_Help!==TRUE (
@@ -115,8 +123,8 @@ Exit /B 0
 
 :MSG_Help
 	echo.
-	echo %BlockDivider:"=%
-	echo Name: %Name:"=% 
+	REM echo %BlockDivider1:"=%
+	REM echo Name: %Name:"=% 
 	for %%a in (%Head_Sections%) do (
 		for %%i in (%Max_Help_Items%) do (
 			if defined %%~a%%i (
@@ -125,14 +133,11 @@ Exit /B 0
 					echo.
 				) else (
 					set msg=!msg:"=!
-					if %%i==0 (
-						echo %%~a: !msg!
-					) else (
-						echo !msg!
-					)
+					set msg=!msg:'="!
+					echo !msg!
 				)
 			)
 		)
 	)
-	echo %BlockDivider:"=%
+	REM echo %BlockDivider1:"=%
 Exit /B 0
