@@ -62,7 +62,7 @@ Remarks:
 3. Use the relative path of the [source_directory_or_file] as [destination_file] can help with the search later.
 4. Backslashes in the destination_file will be replaced by the string defined by Backslash_Replacer variable.
 </pre>
-### `save_permission_batch.cmd` Batch process permissions and stores by top level sub-directory. <a id='save_permission_batch'></a>
+### `save_permission_batch.cmd` Batch process permissions and stores by top level sub-directory (with exclusion list support). <a id='save_permission_batch'></a>
 <pre>
 *********************************************************************
 save_permission_batch.cmd:
