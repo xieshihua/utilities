@@ -1,8 +1,8 @@
 echo off
 setlocal enabledelayedexpansion
 
-set BlockDivider0="*********************************************************************"
-REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+set Block_Divider_0="*********************************************************************"
+REM set Block_Divider_1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 set Name="cmd_template.cmd"
 
@@ -58,10 +58,10 @@ set Reference1="- A thorough reference to Windows CMD commands can be found at: 
 set Reference2="- https://ss64.com/ also provides references of Linux, macOS, PowerShell, ASCII, VBScript, Tools, and Passwords."
 
 rem Batch CMD heading
-echo %BlockDivider0:"=%
+echo %Block_Divider_0:"=%
 echo %Name:"=%:
 call :MSG_Lines "Purpose"
-echo %BlockDivider0:"=%
+echo %Block_Divider_0:"=%
 
 rem Set the number of mandatory arguments
 set /A EffArg_Required=3
@@ -182,12 +182,12 @@ Exit /B 0
 rem Show help message sections
 :MSG_Help
 	echo.
-	REM echo %BlockDivider1:"=%
+	REM echo %Block_Divider_1:"=%
 	REM echo Name: %Name:"=% 
 	for %%a in (%Info_Sections%) do (
 		call :MSG_Lines "%%~a"
 	)
-	REM echo %BlockDivider1:"=%
+	REM echo %Block_Divider_1:"=%
 Exit /B 0
 
 rem Process and show one message section
