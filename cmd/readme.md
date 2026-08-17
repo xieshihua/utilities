@@ -8,7 +8,14 @@
 <pre>
 *********************************************************************
 cmd_template.cmd:
-A template to process Windows CMD batch commends arguments.
+A template to process Windows CMD batch command arguments, which covers:
+- Mandatory arguments.
+- Optional arguments with default value.
+- Static variables, use %variable_name% reference.
+- Mutable variables, must enabledelayedexpansion, and use !variable_name! reference.
+- Loops.
+- Sub routine/function.
+- Standard script heading, and help sections.
 *********************************************************************
 
 cmd_template.cmd [/?] [/t | /T] [[/p | /P]:Path] arg1 arg2 arg3 ...
@@ -31,7 +38,8 @@ Example 2: The following command demos an [Active] run with 3 arguments, and to 
 Remarks:
 1. Set the EffArg_Required to the number of mandatory arguments.
 2. Set Max_Help_Items to the maximun items in the head sections.
-3. Please replace head sections with your own notes.
+3. Update [Head_Sections] to include only sections you are using.
+4. Please replace head sections with your own notes.
 
 References:
 - A thorough reference to Windows CMD commands can be found at: https://ss64.com/nt/
