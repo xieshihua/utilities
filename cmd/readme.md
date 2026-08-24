@@ -81,26 +81,33 @@ Remarks:
 <pre>
 *********************************************************************
 save_permission_batch.cmd:
-Batch backup permissions grouped by sub directories with exclusion list support.
-- Creates top level sub directories of the [source_directory] in the [destination_directory].
-- And then batch backs up permission of subsequent sub directories to text files in coresponding sub directories in the [destination_directory].
+Batch backup permissions grouped by sub folders with exclusion list support.
+- Create the [destination_path].
+- Creates top level sub folders of the [source_path] in the [destination_path].
+- And then batch backs up permission of subsequent sub folders to text files in coresponding sub folders in the [destination_path].
+- Folders specified in [Exclusion_List] variable are excluded.
+- An additional folder can be added to the [Exclusion_List] through the argument [/EX:path] at the runtime.
 *********************************************************************
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[All arguments]: /?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-save_permission_batch.cmd [/?] [/T] source_directory destination_directory
+save_permission_batch.cmd [/?] [/T] [/EX:path] source_path destination_path
 
-  [/?]                   Optional. Show Help.
-  [/T]                   Optional. Test run or dry run without writing.
-  source_directory       Permissions of all sub directories to be backed up.
-  destination_directory  Permissions will be backed up to this directory.
+  [/?]              Optional. Show Help.
+  [/T]              Optional. Test run or dry run without writing.
+  [/EX:path]        Optional. Additional excluded path.
+  source_path       Permissions of all sub folders to be backed up.
+  destination_path  Permissions will be backed up to this path.
 
-The following command displays the process of saving permissions of sub directories of D:\ to C:\temp\D_Permissions without create folder or file.
+The following command displays the process of saving permissions of sub folders of D:\, excluding folders specified by [Exclusion_List] and D:\temp specified by [/EX:temp], to C:\temp\D_Permissions without create folder or file.
 
-  C:\dvlp>save_permission_batch D: C:\temp\D_Permissions /t
+  C:\dvlp>save_permission_batch D: C:\temp\D_Permissions /EX:temp /t
 
 Remarks:
 1. This script calls save_permission.cmd. You must update Path_save_permission variable.
 2. Alternatively, you may add the path of save_permission.cmd to the Path environment variable.
-3. Set the Exclusion_List variable to exclude sub directories you want to escape.
+3. Set the Exclusion_List variable to exclude sub folders you want to escape.
 </pre>
 ### `start_service.cmd` Start a Windows service if it is not running.<a id='start_service'></a>
 <pre>
