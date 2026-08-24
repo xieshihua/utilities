@@ -1,30 +1,36 @@
 echo off
 setlocal enabledelayedexpansion
 
-set BlockDivider0="*********************************************************************"
+set Block_Divider_0="*********************************************************************"
 REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="start_service.cmd"
+
+set Optional_Info_Sections=Usage,Example
+set /A Max_Section_Items=5
+
 set Purpose0="Start a Windows service if it is not running."
+
 set Usage0="start_service.cmd [/?] [/T] service_name"
 set Usage1="."
 set Usage2="  [/?]          Optional. Display the Help info, defaults to FALSE."
 set Usage3="  [/T]          Optional. Test run or dry run, defaults to FALSE."
 set Usage4="  service_name  The name of a Windows service."
 set Usage5="."
+
 set Example0="The following command shows the status of AppReadiness."
 set Example1="If the service is not running, it shows the command to start the service:"
 set Example2="."
 set Example3="  C:\dvlp>start_service.cmd AppReadiness /t"
 set Example4="."
-rem set Remark="Set the EffArg_Required to the number of mandatory arguments."
-rem set Reference="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
-set Head_Sections=Usage,Example
-set Max_Help_Items=0,1,2,3,4,5
 
-echo %BlockDivider0:"=%
+rem set Remark0="Set the EffArg_Required to the number of mandatory arguments."
+
+rem set Reference0="A thorough reference to Windows CMD commends: https://ss64.com/nt/"
+
+echo %Block_Divider_0:"=%
 echo %Name:"=%:
 call :MSG_Lines "Purpose"
-echo %BlockDivider0:"=%
+echo %Block_Divider_0:"=%
 
 REM 'shift' will process all the arguments.
 set /A Arg_Count=0
@@ -126,14 +132,14 @@ Exit /B 0
 	echo.
 	REM echo %BlockDivider1:"=%
 	REM echo Name: %Name:"=% 
-	for %%a in (%Head_Sections%) do (
+	for %%a in (%Optional_Info_Sections%) do (
 		call :MSG_Lines "%%~a"
 	)
 	REM echo %BlockDivider1:"=%
 Exit /B 0
 
 :MSG_Lines
-	for %%i in (%Max_Help_Items%) do (
+	for /L %%i in (0,1,%Max_Section_Items%) do (
 		if defined %~1%%i (
 			set msg=!%~1%%i!
 			if !msg! equ "." (
