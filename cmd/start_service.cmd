@@ -1,13 +1,16 @@
 echo off
 setlocal enabledelayedexpansion
 
-set Block_Divider_0="*********************************************************************"
-REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="start_service.cmd"
 
-set Optional_Info_Sections=Usage,Example
-set /A Max_Section_Items=5
+set Block_Divider_0="*********************************************************************"
+REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
+rem Configue Info Sections
+set /A Max_Section_Items=5
+set Optional_Info_Sections=Usage,Example
+
+rem Set info sections
 set Purpose0="Start a Windows service if it is not running."
 
 set Usage0="start_service.cmd [/?] [/T] service_name"
@@ -90,7 +93,7 @@ if not !Is_Help!==TRUE (
 
 if !Is_Help!==TRUE (
 	call :MSG_Help
-	exit /b 0
+	goto The_Exit
 )
 
 if !Is_Test!==TRUE (
@@ -119,6 +122,10 @@ if !Is_Test!==TRUE (
 	echo.
 )
 
+rem the Exit point of the batch CMD.
+:The_Exit
+endlocal
+echo on
 Exit /B 0
 
 :MSG_EffectiveArgs
