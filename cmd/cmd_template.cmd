@@ -1,17 +1,18 @@
 echo off
 setlocal enabledelayedexpansion
 
+set Name="cmd_template.cmd"
+
 set Block_Divider_0="*********************************************************************"
 set Block_Divider_1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-
-set Name="cmd_template.cmd"
 
 rem *** Info Section Configuration ***
 rem * Delete or comment out any item that you do not use.
 rem * use "." to insert a blank line.
-
-set Optional_Info_Sections=Usage,Example,Remark,Reference
+rem **********************************
+rem Configue Info Sections
 set /A Max_Section_Items=10
+set Optional_Info_Sections=Usage,Example,Remark,Reference
 
 rem When called by a parent batch CMD, variables defined in the parent process may stay. So, clear All!
 call :Unset_Info_Sections Purpose
@@ -122,7 +123,7 @@ if "%~1"=="" goto end_arg_loop
 		set Is_Effective=FALSE
 	)
 	
-	if /I "!tmp_arg!" == "/t" (
+	if /I "!tmp_arg!" == "/T" (
 		set Is_Test=TRUE
 		set Is_Effective=FALSE
 	)
@@ -160,6 +161,7 @@ if not !Is_Help!==TRUE (
 
 rem Display the help message if is requested or the number of passed-in mandatory arguments is less than the required number of mandatory arguments.
 if !Is_Help!==TRUE (
+	echo %Block_Divider_1:"=%
 	call :MSG_Help
 	goto The_Exit
 )
