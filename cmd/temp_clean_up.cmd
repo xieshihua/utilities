@@ -1,13 +1,16 @@
 echo off
 setlocal enabledelayedexpansion
 
-set Block_Divider_0="*********************************************************************"
-REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 set Name="temp_clean_up.cmd"
 
-set Optional_Info_Sections=Usage,Example,Remark
-set /A Max_Section_Items=6
+set Block_Divider_0="*********************************************************************"
+REM set BlockDivider1="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
+rem Configue Info Sections
+set /A Max_Section_Items=6
+set Optional_Info_Sections=Usage,Example,Remark
+
+rem Set info sections
 set Purpose0="Remove files in [Path_to_Check] folder(s) and their sub folders that are older than [Cut_off_Days] days."
 
 rem Below are optional Help items. Delete or comment out any item that you do not use.
@@ -106,7 +109,7 @@ if not !Is_Help!==TRUE (
 
 if !Is_Help!==TRUE (
 	call :MSG_Help
-	exit /b 0
+	goto The_Exit
 )
 
 echo Cut_off_Days: !Cut_off_Days!
@@ -118,6 +121,8 @@ REM set /A Cut_off_Days=120
 REM set Path_to_Check="D:\tmp\apps_data","D:\tmp\web_temp","D:\tmp\sde_client"
 REM call :clean_up %Cut_off_Days%, %Path_to_Check%, %1
 
+rem the Exit point of the batch CMD.
+:The_Exit
 endlocal
 echo on
 exit /B %errorlevel%
