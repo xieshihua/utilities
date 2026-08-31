@@ -14,7 +14,7 @@ set /A Max_Section_Items=10
 set Optional_Info_Sections=Usage,Example,Remark
 
 rem Set info sections
-set Purpose0="Batch restore folders and their permissions previously backed up with [restore_permission_batch.cmd]."
+set Purpose0="Batch restore folders and their permissions previously backed up with [save_permission_batch.cmd]."
 set Purpose1="- Create the [Restore_Root]."
 set Purpose2="- Creates top level sub folders of the [Backup_Root] in the [Restore_Root]."
 set Purpose3="- And then batch backs up permission of subsequent sub folders to text files in coresponding sub folders in the [Restore_Root]."
