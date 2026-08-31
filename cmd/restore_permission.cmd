@@ -17,7 +17,7 @@ for %%s in (Optional_Info_Sections) do (
 )
 
 rem Set info sections
-set Purpose0="Create a folder and restore Acl permissions from a previously captured Acl permissions text file."
+set Purpose0="Create a folder and restore ACL permissions from a previously backed up with [save_permission.cmd]."
 
 set Usage0="restore_permission.cmd [/?] [/T] [/BR:Backslash_Replacer] [/TE:Text_Extension] 'Restore_Folder' 'ACL_File'"
 set Usage1="."
@@ -25,8 +25,8 @@ set Usage2="  [/?]                     Optional. Show Help."
 set Usage3="  [/T]                     Optional. Test run or dry run without writing." 
 set Usage4="  [/BR:Backslash_Replacer] Optional. The backslash replacer used during the back up. Defaults to [_]."
 set Usage5="  [/TE:Text_Extension]     Optional. The text file extention for the output [Destination_File]. Defaults to 'txt'."
-set Usage6="  Restore_Folder       The path to be created and the permission to be restored to the new folder."
-set Usage7="  ACL_File                 Acl file which contains the previously captured Acl permissions."
+set Usage6="  Restore_Folder           The path to be created and the permission to be restored to the new folder."
+set Usage7="  ACL_File                 ACL file which contains the previously captured ACL permissions."
 set Usage8="."
 
 set Example0="The following command shows the process of restore the permission of [C:\dvlp\CMD] from [C:\temp\dvlp[_]CMD.txt] without create the folder and restore the permission:"
