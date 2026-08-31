@@ -15,21 +15,21 @@ set Optional_Info_Sections=Usage,Example,Remark
 
 rem Set info sections
 set Purpose0="Batch backup permissions grouped by sub folders with exclusion list support."
-set Purpose1="- Create the [backup_path]."
-set Purpose2="- Creates top level sub folders of the [source_path] in the [backup_path]."
-set Purpose3="- And then batch backs up permission of subsequent sub folders to text files in coresponding sub folders in the [backup_path]."
+set Purpose1="- Create the [Backup_Path]."
+set Purpose2="- Creates top level sub folders of the [Source_Path] in the [Backup_Path]."
+set Purpose3="- And then batch backs up permission of subsequent sub folders to text files in coresponding sub folders in the [Backup_Path]."
 set Purpose4="- Folders specified in [Exclusion_List] variable are excluded."
 set Purpose5="- An additional folder can be added to the [Exclusion_List] through the argument [/EX:path] at the runtime."
 
-set Usage0="save_permission_batch.cmd [/?] [/T] [/BR:Backslash_Replacer] [/EX:Path_to_Exclude] [/TE:Text_Extension] source_path backup_path"
+set Usage0="save_permission_batch.cmd [/?] [/T] [/BR:Backslash_Replacer] [/EX:Path_to_Exclude] [/TE:Text_Extension] Source_Path Backup_Path"
 set Usage1="."
 set Usage2="  [/?]                     Optional. Show Help."
 set Usage3="  [/T]                     Optional. Test run or dry run without writing."
 set Usage4="  [/BR:Backslash_Replacer] Optional. The string to replace backslashes in the destination file."
 set Usage5="  [/EX:Path_to_Exclude]    Optional. Additional excluded path."
 set Usage6="  [/TE:Text_Extension]     Optional. The text file extention for the output [Destination_File]. Defaults to 'txt'."
-set Usage7="  source_path              Permissions of all sub folders to be backed up."
-set Usage8="  backup_path         Permissions will be backed up to this path."
+set Usage7="  Source_Path              Permissions of all sub folders to be backed up."
+set Usage8="  Backup_Path              Permissions will be backed up to this path."
 set Usage9="."
 
 set Example0="The following command displays the process of saving permissions of sub folders of [D:\], excluding folders specified by [Exclusion_List] and [D:\temp] specified by [/EX:temp], to [C:\temp\D_Permissions] without create folder or file."
@@ -101,10 +101,10 @@ if "%~1"=="" goto end_arg_loop
 		set /A Effective_Args+=1
 		rem echo Effective Args: !Effective_Args!
 		if !Effective_Args! == 1 (
-			set source_path=%~1
+			set Source_Path=%~1
 		)
 		if !Effective_Args! == 2 (
-			set backup_path=%~1
+			set Backup_Path=%~1
 		)
 		if !Effective_Args! GTR %EffArg_Required% (
 			if "!unexpected_args!" GTR "" (
@@ -145,15 +145,15 @@ if defined Path_to_Exclude (
 )
 
 rem Trim ending "\".
-if "!source_path:~-1!" equ "\" (
-	set source_path=!source_path:~0,-1!
+if "!Source_Path:~-1!" equ "\" (
+	set Source_Path=!Source_Path:~0,-1!
 )
-if "!backup_path:~-1!" equ "\" (
-	set backup_path=!backup_path:~0,-1!
+if "!Backup_Path:~-1!" equ "\" (
+	set Backup_Path=!Backup_Path:~0,-1!
 )
 
-echo [Batch source root]:      !source_path!
-echo [Batch destination root]: !backup_path!
+echo [Batch source root]:      !Source_Path!
+echo [Batch destination root]: !Backup_Path!
 echo [Exclusion List]:         !Exclusion_List!
 if defined Backslash_Replacer (
 	echo [Backslash Replacer]:     !Backslash_Replacer!
@@ -162,31 +162,31 @@ echo [Backup File Extension]:  !Text_Extension!
 echo %Block_Divider_1:"=%
 echo.
 
-echo Create destination root: [!backup_path!]
+echo Create destination root: [!Backup_Path!]
 if !Is_Test! == TRUE (
-	echo mkdir !backup_path!
+	echo mkdir !Backup_Path!
 ) else (
-	mkdir !backup_path!
+	mkdir !Backup_Path!
 )
 echo.
 
-set source_tree_file=!source_path::=_!
+set source_tree_file=!Source_Path::=_!
 set source_tree_file=Tree_!source_tree_file:\=[_]!.!Text_Extension!
 echo Store Source Tree to: [!source_tree_file!]
 if !Is_Test! == TRUE (
-	set tmp_str="tree !source_path! > !backup_path!\!source_tree_file!"
+	set tmp_str="tree !Source_Path! > !Backup_Path!\!source_tree_file!"
 	echo !tmp_str:"=!
 ) else (
-	tree !source_path! > !backup_path!\!source_tree_file!
+	tree !Source_Path! > !Backup_Path!\!source_tree_file!
 )
 echo.
 
 set Time_Started=%date%:%time%
-echo [!source_path!] Time started: %Time_Started%
+echo [!Source_Path!] Time started: %Time_Started%
 
 rem *** Batch Processing ***
-for /f "tokens=*" %%a in ('dir /a:d /b !source_path!\') do (
-	set src=!source_path!\%%a
+for /f "tokens=*" %%a in ('dir /a:d /b !Source_Path!\') do (
+	set src=!Source_Path!\%%a
 	echo.
 	echo %Heading_Line_0:"=% Processing Folder: [!src!] %Heading_Line_0:"=%
 	call :Test_Membership "%%a"
@@ -194,7 +194,7 @@ for /f "tokens=*" %%a in ('dir /a:d /b !source_path!\') do (
 		echo [%%a] is excluded.
 		echo.
 	) else (
-		set dst=!backup_path!\%%a
+		set dst=!Backup_Path!\%%a
 		rem stepwise is easier to read and maintain then blockwise.
 
 		set SubTime_Started=!date!:!time!
@@ -242,8 +242,8 @@ echo off
 
 echo.
 echo %Heading_Line_0:"=%***  Total Time Elapsed  ****%Heading_Line_0:"=%
-echo [!source_path!] Time started: %Time_Started%
-echo [!source_path!] Time finished: !date!:!time!
+echo [!Source_Path!] Time started: %Time_Started%
+echo [!Source_Path!] Time finished: !date!:!time!
 echo %Block_Divider_1:"=%
 
 rem the Exit point of the batch CMD.
