@@ -1,4 +1,4 @@
-## CMD - Windows CMD batch scripts
+## CMD - Windows CMD batch scripts<a id='top'></a>
 - [cmd_template.cmd](#cmd_template)
 - [restore_permission.cmd](#restore_permission)
 - [restore_permission_batch.cmd](#restore_permission_batch)
@@ -51,6 +51,8 @@ References:
 - https://ss64.com/ also provides references of Linux, macOS, PowerShell, ASCII, VBScript, Tools, and Passwords.
 - https://stackoverflow.com/questions/48623165/null-variable-in-a-bat-window-batch-file
 </pre>
+[back to top](#top)
+
 ### `restore_permission.cmd` Create a folder and restore ACL permissions previously backed up with [save_permission.cmd](#save_permission).<a id='restore_permission'></a>
 <pre>
 *********************************************************************
@@ -77,6 +79,8 @@ Remarks:
 3. All [Backslash_Replacer] strings in the [Restore_Folder] will be restored to backslash.
 4. The default exporting text file extension is set through the [Text_Extension] variable, which can be overwritten by [/TE:Text_Extension] argument at runtime.
 </pre>
+[back to top](#top)
+
 ### `restore_permission_batch.cmd` Batch restore folders and their permissions previously backed up with [save_permission_batch.cmd](#save_permission_batch).<a id='restore_permission_batch'></a>
 <pre>
 *********************************************************************
@@ -110,6 +114,8 @@ Remarks:
 3. Set the Exclusion_List variable to exclude sub folders you want to escape.
 4. The default exporting text file extension is set through the [Text_Extension] variable, which can be overwritten by [/TE:Text_Extension] argument at runtime.
 </pre>
+[back to top](#top)
+
 ### `save_permission.cmd` Backup a directory or a file permission to a text file.<a id='save_permission'></a>
 <pre>
 *********************************************************************
@@ -137,6 +143,8 @@ Remarks:
 3. The default exporting text file extension is set through the [Text_Extension] variable, which can be overwritten by [/TE:Text_Extension] argument at runtime.
 4. Use the relative path of the [Source_Folder_or_File] as [Destination_File] can help with the search later.
 </pre>
+[back to top](#top)
+
 ### `save_permission_batch.cmd` Batch process permissions and stores by top level sub-directory (with exclusion list support). <a id='save_permission_batch'></a>
 <pre>
 *********************************************************************
@@ -170,6 +178,8 @@ Remarks:
 4. The default exporting text file extension is set through the [Text_Extension] variable, which can be overwritten by [/TE:Text_Extension] argument at runtime.
 
 </pre>
+[back to top](#top)
+
 ### `start_service.cmd` Start a Windows service if it is not running.<a id='start_service'></a>
 <pre>
 *********************************************************************
@@ -188,6 +198,8 @@ If the service is not running, it shows the command to start the service:
 
   C:\dvlp>start_service.cmd AppReadiness /t
 </pre>
+[back to top](#top)
+
 ### `temp_clean_up.cmd` Remove files in [Path_to_Check] folder(s) and their sub folders that are older than [Cut_off_Days] days.<a id='temp_clean_up'></a>
 <pre>
 *********************************************************************
@@ -208,3 +220,4 @@ The following command scans [C:\Program Files] and display the files that are ol
 
 * It goes through sub folders recursively.
 </pre>
+[back to top](#top)
