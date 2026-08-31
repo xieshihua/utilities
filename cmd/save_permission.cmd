@@ -61,8 +61,8 @@ rem set Is_RemoveDot=FALSE
 rem set delimiter=""
 rem set unexpected_args=""
 
-rem echo args: %*echo %Block_Divider_1:"=%
-echo [All arguments]:         %*
+echo %Block_Divider_1:"=%
+echo [All arguments]:          %*
 
 :arg_loop
 if "%~1"=="" goto end_arg_loop
