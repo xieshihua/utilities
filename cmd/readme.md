@@ -55,7 +55,7 @@ References:
 <pre>
 *********************************************************************
 restore_permission.cmd:
-Create a folder and restore ACL permissions from a previously previously backed up with [save_permission.cmd].
+Create a folder and restore ACL permissions from a previously backed up with [save_permission.cmd].
 *********************************************************************
 
 restore_permission.cmd [/?] [/T] [/BR:Backslash_Replacer] [/TE:Text_Extension] "Restore_Folder" "ACL_File"
